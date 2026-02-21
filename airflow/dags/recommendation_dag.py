@@ -1,3 +1,16 @@
+"""
+Domain: Clickstream
+Data Product: Top Products
+Owner: Alena
+SLA: every 10 minutes
+Published interfaces: DuckDB(top_products), Redis(top_products)
+"""
+
+
+
+
+
+
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.apache.kafka.operators.consume import ConsumeFromTopicOperator

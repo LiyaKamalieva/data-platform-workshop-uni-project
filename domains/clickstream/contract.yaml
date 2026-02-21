@@ -1,0 +1,56 @@
+domain: clickstream
+data_product: top_products
+version: 1.0
+
+inputs:
+  - name: kafka.aggregated_clicks
+    description: Aggregated click counts per product_id
+    fields:
+      - name: product_id
+        type: int
+      - name: click_count
+        type: int
+
+  - name: duckdb.orders
+    description: Historical orders used for enrichment
+    fields:
+      - name: order_id
+        type: int
+      - name: product_id
+        type: int
+      - name: quantity
+        type: int
+      - name: price
+        type: float
+      - name: order_date
+        type: timestamp
+
+outputs:
+  - name: duckdb.top_products
+    description: Ranked products with combined score
+    fields:
+      - name: product_id
+        type: int
+      - name: click_count
+        type: int
+      - name: total_orders
+        type: int
+      - name: avg_price
+        type: float
+      - name: score
+        type: float
+      - name: updated_at
+        type: timestamp
+
+  - name: redis.top_products
+    description: Redis hash for fast retrieval
+    key: product_id
+    value: json
+
+sla:
+  frequency: "*/10 * * * *"
+  freshness_minutes: 15
+
+owner:
+  name: Alena
+  contact: "GitHub: LiyaKamalieva"
